@@ -130,7 +130,8 @@ loop:
 			
 			#if 1
 			__asm __volatile__(
-			"li s0, 0x00007FF0;"	/* stack address */
+//			"li s0, 0x00007FF0;"	/* stack address */
+			"li s0, 0x00001FF0;"	/* stack address for 8K (2048*4) */
 			"mv ra, zero;"
 			"jr %0;"
 			: 
