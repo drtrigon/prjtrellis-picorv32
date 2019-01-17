@@ -34,10 +34,10 @@ all: $(PROJ).rpt $(PROJ).bin
 	$(ICESTORM)/arachne-pnr -d 8k -P tq144:4k -o $@ -p $^
 
 %.bin: %.asc
-	icepack $< $@
+	$(ICESTORM)/icepack $< $@
 
 %.rpt: %.asc
-	icetime -d $(DEVICE) -mtr $@ $<
+	$(ICESTORM)/icetime -d $(DEVICE) -p $(PIN_DEF) -C $(ICESTORM)/../share/icebox/chipdb-8k.txt -mtr $@ $<
 
 prog: $(PROJ).bin
 	iceprog $<
