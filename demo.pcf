@@ -18,7 +18,7 @@ set_io --warn-no-port led[6] 38 # output
 set_io --warn-no-port led[7] 37 # output
 
 # -------------------------- SYSTEM CLOCK -------------------------------------
-set_io --warn-no-port clk 49  # input
+set_io --warn-no-port clk_25mhz 49  # input (eventhough Alhambra 2 clock is 12MHz)
 
 # --- Flash memory (SPI)
 set_io --warn-no-port flash_csb   71  # output (SS)

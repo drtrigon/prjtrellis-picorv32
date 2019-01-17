@@ -40,7 +40,7 @@ all: $(PROJ).rpt $(PROJ).bin
 	$(ICESTORM)/icetime -d $(DEVICE) -p $(PIN_DEF) -C $(ICESTORM)/../share/icebox/chipdb-8k.txt -mtr $@ $<
 
 prog: $(PROJ).bin
-	iceprog $<
+	$(ICESTORM)/iceprog $<
 
 sudo-prog: $(PROJ).bin
 	@echo 'Executing prog as root!!!'

@@ -30,7 +30,8 @@ void main(void)
 	char *cp;
 	void *base_addr = NULL;
 
-        reg_uart_clkdiv = 416/2; // sets baudrate 115200 @ 25 MHz
+//        reg_uart_clkdiv = 416/2; // sets baudrate 115200 @ 25 MHz
+	reg_uart_clkdiv = 104;  // sets baudrate 115200 @ 12 MHz
 
 	/* Appease gcc's uninitialized variable warnings */
 	val = 0;
