@@ -7,6 +7,10 @@
 #define reg_uart_clkdiv (*(volatile uint32_t*)0x02000004)
 #define reg_uart_data (*(volatile uint32_t*)0x02000008)
 
+//#define F_CPU 25000000 // Hz
+#define F_CPU 12000000 // Hz
+#define BAUD_RATE 115200 // bit/s
+
 int getchar_available()
 {
   return reg_uart_data & 0x100;
@@ -30,8 +34,7 @@ void main(void)
 	char *cp;
 	void *base_addr = NULL;
 
-//        reg_uart_clkdiv = 416/2; // sets baudrate 115200 @ 25 MHz
-	reg_uart_clkdiv = 104;  // sets baudrate 115200 @ 12 MHz
+        reg_uart_clkdiv = F_CPU/BAUD_RATE; // sets baudrate (115200 @ 25 MHz)
 
 	/* Appease gcc's uninitialized variable warnings */
 	val = 0;
@@ -107,37 +110,16 @@ loop:
 
 	/* Address width */
 	if (pos == 1) {
-		if (val >= 7 && val <= 9) {
-			#if 0
-			// overwrite first few bytes
-			#if 0
-			for(c = 0; c < 32; c++)
-			{
-			  ((char *)base_addr)[c] = c;
-			}
-			#endif
-			// binary blink leds reading first few 
-			// uploaded bytes before jumping to this new code
-			for(c = 0; c < 32; c++)
-			{
-			  LED = ((char *)base_addr)[c];
-			  for(int k = 0; k < 100000; k++)
-			    asm("nop");
-			}
-			#endif
-			
-			// ((void (*)(void))base_addr)();
-			
-			#if 1
+		if (val >= 7 && val <= 9)
+		{
 			__asm __volatile__(
-//			"li s0, 0x00007FF0;"	/* stack address */
-			"li s0, 0x00001FF0;"	/* stack address for 8K (2048*4) */
+//			"li s0, 0x00008000;"	/* 32K RAM top = stack address */
+			"li s0, 0x00002000;"	/* 8K RAM top = stack address */
 			"mv ra, zero;"
 			"jr %0;"
 			: 
 			: "r" (base_addr)
 			);
-			#endif
 		}
 		if (val <= 3)
 			len = (val << 1) + 5;
