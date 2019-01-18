@@ -11,11 +11,14 @@
 #              iCE40-HX4K-TQ144; -d 8k -P tq144:4k, -d hx8k
 # 5. memory:   need to be reduced from 32K to 8K, for math see below
 #              >>> hex(8192*4-1) -> '0x7fff'
-#              >>> hex(eval(hex(8192*4-1))-16+1) -> '0x7ff0'
+#              >>> hex(eval(hex(8192*4-1))-16+1) = hex(8192*4-16) -> '0x7ff0'
 #              >>> hex(2048*4-1) -> '0x1fff'
-#              >>> hex(eval(hex(2048*4-1))-16+1) -> '0x1ff0'
+#              >>> hex(eval(hex(2048*4-1))-16+1) = hex(2048*4-16) -> '0x1ff0'
 #              >>> hex(8192*4) -> '0x8000'
 #              >>> hex(2048*4) -> '0x2000'
+# (for f32c vhdl support needed - see https://github.com/YosysHQ/yosys-plugins/tree/master/vhdl - and as icestudio yosys
+# was build without plugin support, toolchain needs to be installed - see http://www.clifford.at/icestorm/ - and this also
+# adds nextpnr for free, test in VM)
 
 PROJ = top
 PIN_DEF = demo.pcf
